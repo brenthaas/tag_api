@@ -35,5 +35,12 @@ describe EntitiesController do
         end
       end
     end
+
+    context "with invalid parameters" do
+      it "raises 422 Unprocessible" do
+        do_create({ entity_type: "Fail" })
+        expect(response.status).to eq(422)
+      end
+    end
   end
 end
