@@ -11,10 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150420202549) do
+ActiveRecord::Schema.define(version: 20150420210933) do
 
   create_table "entities", force: :cascade do |t|
-    t.string   "type"
+    t.string   "entity_type"
     t.string   "identifier"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
