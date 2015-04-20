@@ -16,9 +16,19 @@ ActiveRecord::Schema.define(version: 20150420202549) do
   create_table "entities", force: :cascade do |t|
     t.string   "type"
     t.string   "identifier"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  create_table "taggings", force: :cascade do |t|
+    t.integer  "entity_id"
+    t.integer  "tag_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  add_index "taggings", ["entity_id"], name: "index_taggings_on_entity_id"
+  add_index "taggings", ["tag_id"], name: "index_taggings_on_tag_id"
 
   create_table "tags", force: :cascade do |t|
     t.string   "name",       null: false
