@@ -11,15 +11,21 @@ class TagsController < ApplicationController
     end
 
     params.require(:tags).each do |tag|
-      entity.tags.find_or_create_by(name: tag)
+      entity.tags << Tag.find_or_create_by(name: tag)
     end
 
     render json: {}
   end
 
   def show_entity
-    entity = Entity.find_by!( entity_type: params.require(:entity_type),
-                             entity_id: params.require(:entity_id))
-    render json: entity, include: { tags: {only: :name} }
+    find_entity
+    render json: @entity, include: { tags: {only: :name} }
+  end
+
+  private
+
+  def find_entity
+    @entity = Entity.find_by!( entity_type: params.require(:entity_type),
+                               entity_id: params.require(:entity_id) )
   end
 end
