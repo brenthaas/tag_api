@@ -22,6 +22,12 @@ class TagsController < ApplicationController
     render json: @entity, include: { tags: {only: :name} }
   end
 
+  def delete_entity
+    find_entity
+    @entity.destroy
+    render json: {}
+  end
+
   private
 
   def find_entity

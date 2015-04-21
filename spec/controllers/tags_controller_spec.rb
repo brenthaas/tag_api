@@ -52,4 +52,16 @@ describe TagsController do
       end
     end
   end
+
+  describe "#delete_entity" do
+    let(:valid_params) { {entity_id: entity_id, entity_type: entity_type} }
+
+    it "deletes the entity" do
+      delete :delete_entity, valid_params
+    end
+
+    it "deletes associated taggings" do
+      expect { delete :delete_entity, valid_params }.to change(Tagging, :count)
+    end
+  end
 end
