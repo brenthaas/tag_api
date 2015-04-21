@@ -16,4 +16,10 @@ class TagsController < ApplicationController
 
     render json: {}
   end
+
+  def show_entity
+    entity = Entity.find_by!( entity_type: params.require(:entity_type),
+                             identifier: params.require(:entity_id))
+    render json: entity, include: { tags: {only: :name} }
+  end
 end
