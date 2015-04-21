@@ -28,6 +28,10 @@ class TagsController < ApplicationController
     render json: {}
   end
 
+  def stats
+    render json: Tag.joins(:taggings).group(:name).count
+  end
+
   private
 
   def find_entity
