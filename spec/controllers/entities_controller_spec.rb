@@ -20,20 +20,6 @@ describe EntitiesController do
       it "creates a new entity" do
         expect{ do_create(valid_params) }.to change(Entity, :count).by(1)
       end
-
-      context "when an entity already exists" do
-        let(:orig_type) { "Foo" }
-        let(:entity) { Entity.find_by_identifier(identifier) }
-
-        before { Entity.create(identifier: identifier, entity_type: orig_type) }
-
-        it "overwrites the existing entity_type" do
-          expect {
-            do_create(valid_params)
-          }.to change{ entity.reload.entity_type }.
-          from(orig_type).to(type)
-        end
-      end
     end
 
     context "with invalid parameters" do
