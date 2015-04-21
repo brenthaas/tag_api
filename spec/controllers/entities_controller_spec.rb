@@ -2,15 +2,15 @@ require 'rails_helper'
 
 describe EntitiesController do
   describe "#create" do
-    let(:type) { 'Product' }
-    let(:identifier) { 'abc-123' }
+    let(:entity_type) { 'Product' }
+    let(:entity_id) { 'abc-123' }
 
     def do_create(params)
       post :create, params
     end
 
     context "with valid parameters" do
-      let(:valid_params) { {entity_type: type, entity_id: identifier} }
+      let(:valid_params) { {entity_type: entity_type, entity_id: entity_id} }
 
       it "returns 200 Success" do
         do_create(valid_params)

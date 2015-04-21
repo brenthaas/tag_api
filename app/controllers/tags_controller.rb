@@ -2,7 +2,7 @@ class TagsController < ApplicationController
   def create
     entity = Entity.find_or_initialize_by(
                entity_type: params.require(:entity_type),
-               identifier: params.require(:entity_id)
+               entity_id: params.require(:entity_id)
              )
     if entity.new_record?
       entity.save
@@ -19,7 +19,7 @@ class TagsController < ApplicationController
 
   def show_entity
     entity = Entity.find_by!( entity_type: params.require(:entity_type),
-                             identifier: params.require(:entity_id))
+                             entity_id: params.require(:entity_id))
     render json: entity, include: { tags: {only: :name} }
   end
 end

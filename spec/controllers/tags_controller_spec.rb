@@ -1,10 +1,10 @@
 require 'rails_helper'
 
 describe TagsController do
-  let(:type) { 'Product' }
-  let(:identifier) { 'abc-123' }
+  let(:entity_type) { 'Product' }
+  let(:entity_id) { 'abc-123' }
   let(:tags) { %w(Foo Bar) }
-  let(:entity) { Entity.create(entity_type: type, identifier: identifier) }
+  let(:entity) { Entity.create(entity_type: entity_type, entity_id: entity_id) }
 
   before do
     tags.each { |tag| entity.tags.create(name: tag) }
@@ -13,7 +13,7 @@ describe TagsController do
   describe "#create" do
     let(:new_tags) { ["Baz"] }
     let(:valid_params) do
-      {entity_type: type, entity_id: identifier, tags: new_tags}
+      {entity_type: entity_type, entity_id: entity_id, tags: new_tags}
     end
 
     it "creates new tags" do
@@ -24,24 +24,25 @@ describe TagsController do
 
     it "does not create tags that already exist" do
       expect {
-        post :create, entity_type: type, entity_id: identifier, tags: tags
+        post :create, entity_type: entity_type, entity_id: entity_id, tags: tags
       }.not_to change(Tag, :count)
     end
 
     it "removes existing taggings" do
       expect {
-        post :create, entity_type: type, entity_id: identifier, tags: []
+        post :create, entity_type: entity_type, entity_id: entity_id, tags: []
       }.to change(entity.tags, :count).
       from(tags.count).to(0)
     end
   end
 
   describe "#show_entity" do
-    let(:valid_params) { {entity_id: identifier, entity_type: type} }
+    let(:valid_params) { {entity_id: entity_id, entity_type: entity_type} }
+
     # TODO:  Add JSON schema matchers
     it "includes the entity tags" do
       get :show_entity, valid_params
-      expect(JSON.parse(response.body)['tags']).to be_present?
+      expect(JSON.parse(response.body)['tags']).to be_present
     end
 
     context "when the entity does not exist" do
